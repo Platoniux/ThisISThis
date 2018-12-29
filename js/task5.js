@@ -1,17 +1,3 @@
-user.checkPassword();
-
-var user2 = user;
-user = null;
-user2.checkPassword();
-
-function ask(question, answer, ok, fail) {
-  var result = prompt(question, '');
-  if (result === answer) {
-    ok();
-  } else {
-    fail();
-  }
-}
 var user = {
   login: 'Andrew',
   password: '12345',
@@ -34,3 +20,18 @@ var user = {
     newAsk();
   }
 };
+
+user.checkPassword();
+
+var user2 = user;
+user = null;
+user2.checkPassword();
+
+function ask(question, answer, ok, fail) {
+  var result = prompt(question, '');
+  if (result === answer) {
+    ok();
+  } else {
+    fail();
+  }
+}
