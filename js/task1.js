@@ -5,9 +5,7 @@ var testObj = {
   }
 };
 
-getName();
-testObj.getNameObj();
-getNameObj();
+getName.call(testObj);
 
 function getName() {
   console.log(this.name);

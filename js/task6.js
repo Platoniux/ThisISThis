@@ -7,15 +7,16 @@
   console.log(nextSlide());
   console.log(priviousSlide());
   console.log(switchSlide(1));
-  console.log(getInfoAboutSlide(2));
-  console.log(addNewSlide(arrayForSlider, 1));
+  console.log(getInfoAboutSlide(currentSlide));
+  console.log(addNewSlide(newSlidesForTest, 0));
   console.log(deleteSlide(1));
 
   function nextSlide() {
-    if (currentSlide < (allImage.length - 1)) {
-      currentSlide++;
+    if (currentSlide === (allImage.length - 1)) {
+      currentSlide = 0;
       return allImage[currentSlide];
     }
+    ++currentSlide;
     return allImage[currentSlide];
   }
 
@@ -38,8 +39,8 @@
   }
 
   function getInfoAboutSlide(a) {
-    if (a <= allImage.length) {
-      var ind = a - 1;
+    if (a < allImage.length) {
+      var ind = a;
       console.log(allImage[ind].alt);
     } else {
       console.log('There is no element with this index');
@@ -48,16 +49,17 @@
 
   function addNewSlide(obj, index) {
     if (index < allImage.length) {
+      currentSlide = index;
       if (Array.isArray(obj)) {
-        var indexIfArray = index;
         for (var i = 0; i < obj.length; i++) {
-          addNewSlide(obj[i], indexIfArray);
-          ++indexIfArray;
+          addNewSlide(obj[i], currentSlide);
+          ++currentSlide;
         }
       } else {
-        allImage.splice(index, 0, obj);
+        allImage.splice(currentSlide, 0, obj);
       }
     } else {
+      currentSlide = allImage.length - 1;
       allImage.push(obj);
     }
     return allImage;
@@ -65,7 +67,8 @@
 
   function deleteSlide(index) {
     if (index < allImage.length) {
-      allImage.splice(index, 1);
+      currentSlide = index;
+      allImage.splice(currentSlide, 1);
     } else {
       console.log('There is no element with this index');
     }
