@@ -1,6 +1,6 @@
 ;(function() {
   var allImage = [{image: 'car.jpg', alt: 'Car'}, {image: 'apple.jpg', alt: 'Apple'}];
-  var currentSlide = 0;
+  var currentSlide = 1;
   var newSlidesForTest = {image: 'ant.jpg', alt: 'Ant'};
   var arrayForSlider = [{image: 'girl.jpg', alt: 'Girl'}, {image: 'wtf.jpg', alt: 'WHAT?'}];
 
@@ -9,7 +9,9 @@
   console.log(switchSlide(1));
   console.log(getInfoAboutSlide(currentSlide));
   console.log(addNewSlide(newSlidesForTest, 0));
+  console.log(currentSlide);
   console.log(deleteSlide(1));
+  console.log(currentSlide);
 
   function nextSlide() {
     if (currentSlide === (allImage.length - 1)) {
@@ -30,8 +32,8 @@
   }
 
   function switchSlide(n) {
-    if(n <= allImage.length) {
-      currentSlide = n - 1;
+    if(n < allImage.length) {
+      currentSlide = n;
       return allImage[currentSlide];
     }
     currentSlide = allImage.length - 1;
@@ -40,35 +42,39 @@
 
   function getInfoAboutSlide(a) {
     if (a < allImage.length) {
-      var ind = a;
-      console.log(allImage[ind].alt);
+      console.log(allImage[a].alt);
     } else {
       console.log('There is no element with this index');
     }
   }
 
   function addNewSlide(obj, index) {
-    if (index < allImage.length) {
-      currentSlide = index;
-      if (Array.isArray(obj)) {
-        for (var i = 0; i < obj.length; i++) {
-          addNewSlide(obj[i], currentSlide);
-          ++currentSlide;
-        }
-      } else {
-        allImage.splice(currentSlide, 0, obj);
+    var indexForArray = index;
+    if (Array.isArray(obj)) {
+      for (var i = 0; i < obj.length; i++) {
+        addNewSlide(obj[i], indexForArray);
+        ++indexForArray;
       }
     } else {
-      currentSlide = allImage.length - 1;
-      allImage.push(obj);
+      if (index <= currentSlide) {
+        allImage.splice(indexForArray, 0, obj);
+        ++currentSlide;
+      } else if (index < arr.length) {
+        allImage.splice(indexForArray, 0, obj);
+      } else {
+        allImage.push(obj);
+      }
     }
     return allImage;
   }
+  
 
   function deleteSlide(index) {
-    if (index < allImage.length) {
-      currentSlide = index;
-      allImage.splice(currentSlide, 1);
+    if (index <= currentSlide) {
+      allImage.splice(index, 1);
+      --currentSlide;
+    } else if (index < allImage.length) {
+      allImage.splice(index, 1);
     } else {
       console.log('There is no element with this index');
     }
